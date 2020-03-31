@@ -1,17 +1,37 @@
 package com.truecaller.truecallerassignment.backend.controller;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.truecaller.truecallerassignment.backend.entities.Tile;
+import com.truecaller.truecallerassignment.backend.services.ChessBoardService;
+import com.truecaller.truecallerassignment.backend.utilities.ChessBoardUtility;
 
 @RestController
 public class TruecallerAssignmentController {
-	private static final String template = "Hello, %s!";
-	private final AtomicLong counter = new AtomicLong();
+	
+	@Autowired
+	private ChessBoardService service;
+	
+	@Autowired
+	private ChessBoardUtility utility;
 
 	@GetMapping("/")
-	public String index() {
-        return "Hello there! I'm running.";
+	public List<Tile> findPath(@RequestParam int row, @RequestParam int column) {
+		Set<Tile> allTiles = utility.populateAllTiles();
+		allTiles.stream().forEach(tile -> utility.generateAllowedMoves(tile, allTiles));
+		Tile tile = utility.getTile(row, column, allTiles);
+		List<Tile> traversedTiles = new ArrayList<Tile>();
+		service.findPath(tile, traversedTiles);
+		utility.transformResponse(traversedTiles);
+		return traversedTiles;
     }
+	
+	
 }
