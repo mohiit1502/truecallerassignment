@@ -13,9 +13,6 @@ public class ChessBoardService {
 		if (currentTile.isVisited()) {
 			return;
 		}
-		if (currentTile.isVisited()) {
-			return;
-		}
 		currentTile.setVisited(true);
 		traversedTiles.add(currentTile);
 		if (traversedTiles.size() == 100) {

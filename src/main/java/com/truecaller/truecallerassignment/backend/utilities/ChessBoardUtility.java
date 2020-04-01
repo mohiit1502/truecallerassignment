@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Component;
 
+import com.truecaller.truecallerassignment.backend.entities.CBRouteResponse;
 import com.truecaller.truecallerassignment.backend.entities.Tile;
 
 @Component
@@ -108,16 +110,20 @@ public class ChessBoardUtility {
 		tile.setAllowedMoves(allowedMoves.stream().filter(tile1 -> !tile1.isVisited()).collect(Collectors.toList()));
 	}
 
-	public void transformResponse(List<Tile> traversedTiles) {
-		traversedTiles = traversedTiles.stream().map(tile -> {
+	public List<CBRouteResponse> transformResponse(List<Tile> traversedTiles) {
+		AtomicInteger index = new AtomicInteger();
+		List<CBRouteResponse> response = traversedTiles.stream().map(tile -> {
+			CBRouteResponse singleResponse = new CBRouteResponse(tile.getRow(), tile.getColumn(), index.incrementAndGet());
 			List<Tile> tiles = tile.getAllowedMoves();
 			String moves = null;
 			if (tiles != null) {
 				moves = tiles.stream().map(tile1 -> tile1.getRow() + "-" + tile1.getColumn()).collect(Collectors.joining(",  "));
 			}
-			tile.setAllowedMoves(null);
-			tile.setAllowedMovesUI(moves);
-			return tile;
+			singleResponse.setAllowedMoves(moves);
+//			tile.setAllowedMoves(null);
+//			tile.setAllowedMovesUI(moves);
+			return singleResponse;
 		}).collect(Collectors.toList());
+		return response;
 	}
 }
