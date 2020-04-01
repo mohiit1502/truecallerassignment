@@ -58,11 +58,6 @@ public class ChessBoardUtility {
 				chessBoard[tile.getRow() - 1][tile.getColumn()-1] = displayValue;
 			}
 			System.out.println("Found a tour from the specified position:\n");
-//			Stream.of(chessBoard)
-//				.flatMap(Stream::of)
-////				.map(t -> Integer.parseInt(t.substring(0, t.indexOf(":"))))
-////				.sorted((t1, t2) -> Integer.compare(Integer.parseInt(t1.substring(0, t1.indexOf(":"))), Integer.parseInt(t2.substring(0, t2.indexOf(":")))))
-//				.forEach(System.out::print);
 			for (int i = 0; i < chessBoard.length; i++) {
 				System.out.println();
 				if (i == 9) {

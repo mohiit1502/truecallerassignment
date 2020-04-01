@@ -6,6 +6,18 @@ import org.springframework.stereotype.Service;
 
 import com.truecaller.truecallerassignment.backend.entities.Tile;
 
+
+/**
+ * Service to find out traversal path of a chess piece to traverse each tile without repeating  any
+ *
+ * Rules: 
+ * 	-	A piece can move 3 tiles to north, south, east or west
+ * 	-	A piece can move 2 tiles diagonally to North-East, North-West, South-East and South-West
+ * 	-	A piece should not visit an already visited tile.
+ * 
+ * @author Mohit Nagar
+ *
+ */
 @Service
 public class ChessBoardService {
 
