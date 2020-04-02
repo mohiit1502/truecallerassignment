@@ -1,6 +1,7 @@
 package com.truecaller.truecallerassignment.backend.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class ChessBoardService {
 			return;
 		}
 		currentTile.setVisited(true);
+		currentTile.setAllowedMoves(currentTile.getAllowedMoves().stream().filter(tile -> !tile.isVisited()).collect(Collectors.toList()));
 		traversedTiles.add(currentTile);
 		if (traversedTiles.size() == 100) {
 			return;

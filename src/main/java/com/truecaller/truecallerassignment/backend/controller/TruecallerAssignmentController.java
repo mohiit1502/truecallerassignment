@@ -24,7 +24,7 @@ public class TruecallerAssignmentController {
 	@Autowired
 	private ChessBoardUtility utility;
 
-	@CrossOrigin()
+	@CrossOrigin(origins = {"http://localhost:3000", "https://mohiit1502.github.io"})
 	@GetMapping("/findpath")
 	public List<CBRouteResponse> findPath(@RequestParam int row, @RequestParam int column) {
 		Set<Tile> allTiles = utility.populateAllTiles();
